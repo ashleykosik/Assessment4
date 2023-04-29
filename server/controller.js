@@ -2,15 +2,15 @@
 let db = [
     {
         title: "Running Up That Hill",
-        id: 1 
+        id: 1, 
     },
     {
         title: "Live A Little",
-        id: 2
+        id: 2,
     },
     {
         title: "The Sound of Letting Go",
-        id: 3
+        id: 3,
     }
 ];
 
@@ -58,20 +58,4 @@ module.exports = {
        db.push(newSong)
        res.status(200).send(db)
     }, 
-
-
-    // updateSong : (req, res) => {
-    //     const {song_title} = req.params
-    //     const {SongId} = req.body
-
-    //     for(let i = 0; i < db.length; i++) {
-    //         if(db[i].id === +SongId) {
-    //             db[i].title = song_title
-    //     }
-    // }
-    // },
-
-
-
- 
 }

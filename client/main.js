@@ -4,8 +4,6 @@ const getAllSongsBtn = document.getElementById("allSongs")
 const songsContainer = document.querySelector('#songsContainer')
 const form = document.querySelector('form')
 
-
-
 const getCompliment = () => {
     axios.get("http://localhost:4000/api/compliment/")
         .then(res => {
@@ -46,14 +44,17 @@ function createSongHandler(e) {
     e.preventDefault()
 
     let title = document.querySelector('#formInput')
+    let rating = 5
 
     let songObj = {
         title: title.value,
+        rating: rating
     }
 
     createSong(songObj)
 
-    title.value = ''    
+    title.value = ''  
+      
 }
 
 function createSongItem(song) {
@@ -62,7 +63,9 @@ function createSongItem(song) {
     songItem.innerHTML = `
     <p class="songId">${song.id}.</p>
     <p class="songTitle">${song.title}</p>
-    <button class="delete" onclick="deleteSong(${song.id})">delete</button>
+    <div class="btns-container">
+       <button class="delete" onclick="deleteSong(${song.id})">delete</button> 
+    </div>
     `
     songsContainer.appendChild(songItem)
 }
