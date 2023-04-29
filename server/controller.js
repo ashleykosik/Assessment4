@@ -14,6 +14,7 @@ let db = [
     }
 ];
 
+let id = db.length
 
 module.exports = {
 
@@ -51,12 +52,12 @@ module.exports = {
         res.status(200).send(db)
      },
 
-    // createSong : (req, res) => {
-    //     id++
-    //    let newSong = {...req.body, id: id}
-    //    db.push(newSong)
-    //    res.status(200).send(db)
-    // }, 
+    createSong : (req, res) => {
+        id++
+       let newSong = {...req.body, id: id}
+       db.push(newSong)
+       res.status(200).send(db)
+    }, 
 
 
     // updateSong : (req, res) => {

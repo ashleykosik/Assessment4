@@ -1,8 +1,8 @@
 const complimentBtn = document.getElementById("complimentButton")
 const fortuneBtn = document.getElementById("fortuneButton")
-//const formInput = document.getElementById("submitBtn")
 const getAllSongsBtn = document.getElementById("allSongs")
 const songsContainer = document.querySelector('#songsContainer')
+const form = document.querySelector('form')
 
 
 
@@ -30,37 +30,35 @@ const getAllSongs = () => {
         .catch(err => console.log(err))
 }
 
-
-
 const deleteSong = (id) => {
     axios.delete(`http://localhost:4000/api/songs/${id}`)
         .then(songCallback)
         .catch(err => console.log(err))
 }
 
-// function submitHandler(e) {
-//     e.preventDefault()
+const createSong = body => {
+    axios.post("http://localhost:4000/api/songs/", body)
+        .then(songCallback)
+        .catch(err => console.log(err))
+}
 
-//     let title = document.querySelector('#title')
-//     let rating = document.querySelector('input[name="ratings"]:checked')
-    
-//     let bodyObj = {
-//         title: title.value,
-//         rating: rating.value, 
-       
-//     }
+function createSongHandler(e) {
+    e.preventDefault()
 
-//     createMovie(bodyObj)
+    let title = document.querySelector('#formInput')
 
-//     title.value = ''
-//     rating.checked = false
-    
-// }
+    let songObj = {
+        title: title.value,
+    }
+
+    createSong(songObj)
+
+    title.value = ''    
+}
 
 function createSongItem(song) {
     const songItem = document.createElement('div')
     songItem.classList.add('songItems')
-
     songItem.innerHTML = `
     <p class="songId">${song.id}.</p>
     <p class="songTitle">${song.title}</p>
@@ -76,11 +74,11 @@ function displaySongs(arr) {
     }
 }
 
-
-//formInput.addEventListener('click', newSong)
 complimentBtn.addEventListener('click', getCompliment)
 fortuneBtn.addEventListener('click', getFortune)
 getAllSongsBtn.addEventListener('click', getAllSongs)
+form.addEventListener('submit', createSongHandler)
 
+// did not need to listen for deleteBtn to be clicked as it is handled in createSongItem
 // const deleteBtn = document.querySelectorAll('delete')
 // deleteBtn.addEventListener('click', deleteSong)
