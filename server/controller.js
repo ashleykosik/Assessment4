@@ -41,6 +41,16 @@ module.exports = {
         res.status(200).send(db)
     },
 
+    deleteSong : (req, res) => {
+        const {songId} = req.params  
+        for (let i = 0; i < db.length; i++) {
+         if (db[i].id === +songId) {
+             db.splice(i, 1)
+         }
+        }
+        res.status(200).send(db)
+     },
+
     // createSong : (req, res) => {
     //     id++
     //    let newSong = {...req.body, id: id}
@@ -48,15 +58,6 @@ module.exports = {
     //    res.status(200).send(db)
     // }, 
 
-    // deleteSong : (req, res) => {
-    //    const {movie_id} = req.params  
-    //    for (let i = 0; i < db.length; i++) {
-    //     if (db[i].id === +SongId) {
-    //         db.splice(i, 1)
-    //     }
-    //    }
-    //    res.status(200).send(db)
-    // },
 
     // updateSong : (req, res) => {
     //     const {song_title} = req.params

@@ -2,6 +2,9 @@ const complimentBtn = document.getElementById("complimentButton")
 const fortuneBtn = document.getElementById("fortuneButton")
 //const formInput = document.getElementById("submitBtn")
 const getAllSongsBtn = document.getElementById("allSongs")
+const songsContainer = document.querySelector('#songsContainer')
+
+
 
 const getCompliment = () => {
     axios.get("http://localhost:4000/api/compliment/")
@@ -19,76 +22,65 @@ const getFortune = () => {
     })
 }
 
+const songCallback = ({ data: songs }) => displaySongs(songs)
+
 const getAllSongs = () => {
     axios.get("http://localhost:4000/api/songs/")
-        .then(res => { 
-            console.log(res.data);
-        } )
+        .then(songCallback)
+        .catch(err => console.log(err))
 }
-//.then(moviesCallback).catch(errCallback)
-
-
-// handling text that is typed into the form
-
-// put (edit) message to correct error
-
-// delete to remove from playlist
-
-// post message(motivational song) to db arrray with spelling error
 
 
 
-// const songCallback = ({ data: movies }) => displayMovies(movies)
-// const errCallback = err => console.log(err.response.data)
+const deleteSong = (id) => {
+    axios.delete(`http://localhost:4000/api/songs/${id}`)
+        .then(songCallback)
+        .catch(err => console.log(err))
+}
 
 // function submitHandler(e) {
 //     e.preventDefault()
 
 //     let title = document.querySelector('#title')
 //     let rating = document.querySelector('input[name="ratings"]:checked')
-//     let imageURL = document.querySelector('#img')
-
+    
 //     let bodyObj = {
 //         title: title.value,
 //         rating: rating.value, 
-//         imageURL: imageURL.value
+       
 //     }
 
 //     createMovie(bodyObj)
 
 //     title.value = ''
 //     rating.checked = false
-//     imageURL.value = ''
+    
 // }
 
-// function createMovieCard(movie) {
-//     const movieCard = document.createElement('div')
-//     movieCard.classList.add('movie-card')
+function createSongItem(song) {
+    const songItem = document.createElement('div')
+    songItem.classList.add('songItems')
 
-//     movieCard.innerHTML = `<img alt='movie cover' src=${movie.imageURL} class="movie-cover"/>
-//     <p class="movie-title">${movie.title}</p>
-//     <div class="btns-container">
-//         <button onclick="updateMovie(${movie.id}, 'minus')">-</button>
-//         <p class="movie-rating">${movie.rating} stars</p>
-//         <button onclick="updateMovie(${movie.id}, 'plus')">+</button>
-//     </div>
-//     <button onclick="deleteMovie(${movie.id})">delete</button>
-//     `
+    songItem.innerHTML = `
+    <p class="songId">${song.id}.</p>
+    <p class="songTitle">${song.title}</p>
+    <button class="delete" onclick="deleteSong(${song.id})">delete</button>
+    `
+    songsContainer.appendChild(songItem)
+}
 
-
-//     moviesContainer.appendChild(movieCard)
-// }
-
-// function displayMovies(arr) {
-//     moviesContainer.innerHTML = ``
-//     for (let i = 0; i < arr.length; i++) {
-//         createMovieCard(arr[i])
-//     }
-// }
+function displaySongs(arr) {
+    songsContainer.innerHTML = ``
+    for (let i = 0; i < arr.length; i++) {
+        createSongItem(arr[i])
+    }
+}
 
 
 //formInput.addEventListener('click', newSong)
 complimentBtn.addEventListener('click', getCompliment)
 fortuneBtn.addEventListener('click', getFortune)
-
 getAllSongsBtn.addEventListener('click', getAllSongs)
+
+// const deleteBtn = document.querySelectorAll('delete')
+// deleteBtn.addEventListener('click', deleteSong)

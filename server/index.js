@@ -7,7 +7,7 @@ app.use(cors());
 
 app.use(express.json());
 
-const { getCompliment, getFortune, getAllSongs } = require('./controller')
+const { getCompliment, getFortune, getAllSongs, deleteSong } = require('./controller')
 
 app.get("/api/compliment", getCompliment);
 
@@ -17,6 +17,8 @@ app.get("/api/fortune/", getFortune);
 app.get("/api/songs", getAllSongs)
 //new feature to add song to database
 //app.post(/api/, body)
+
+app.delete("/api/songs/:songId", deleteSong)
 
 
 app.listen(4000, () => console.log("Server running on 4000"));
